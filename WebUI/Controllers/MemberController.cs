@@ -1,10 +1,11 @@
 ﻿using DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebUI.APIHandler;
 
 namespace WebUI.Controllers
 {
-   
+    [Authorize]
     public class MemberController : Controller
     {
         private readonly IConfiguration _configuration;

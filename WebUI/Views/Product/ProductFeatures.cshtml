@@ -8,7 +8,10 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-m-6 mb-2">
-                        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#dark-header-modal">Yeni Özellik Ekle Ekle</button>
+                        @if (User.IsInRole("SysAdmin") || User.IsInRole("Admin"))
+                        {
+                            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#dark-header-modal">Yeni Özellik Ekle Ekle</button>
+                        }
                     </div>
                     <div class="col-m-6 mb-2 text-end">
                         <button class="btn btn-dark">@Model.FirstOrDefault().Product.Name</button>
@@ -17,25 +20,56 @@
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover">
                                 <thead>
-                                    <tr>
-                                        <th>Renk</th>
-                                        <th>Boy</th>
-                                        <th>Genişlik</th>
-                                        <th>Yükseklik</th>
-                                        <th>İndirim Tanımla</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
+                                    @if (User.IsInRole("SysAdmin") || User.IsInRole("Admin"))
                                     {
                                         <tr>
-                                            <td>@item.Color</td>
-                                            <td>@item.Size</td>
-                                            <td>@item.Width</td>
-                                            <td>@item.Height</td>
-                                            <td class="text-center"><a  class="btn btn-dark">İndirim Tanımla</a></td>
+                                            <th>Renk</th>
+                                            <th>Boy</th>
+                                            <th>Genişlik</th>
+                                            <th>Yükseklik</th>
+                                            <th>İndirim Tanımla</th>
                                         </tr>
                                     }
+                                    else
+                                    {
+                                        <tr>
+                                            <th>Renk</th>
+                                            <th>Boy</th>
+                                            <th>Genişlik</th>
+                                            <th>Yükseklik</th>
+
+                                        </tr>
+                                    }
+
+                                </thead>
+                                <tbody>
+                                    @if (User.IsInRole("SysAdmin") || User.IsInRole("Admin"))
+                                    {
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.Color</td>
+                                                <td>@item.Size</td>
+                                                <td>@item.Width</td>
+                                                <td>@item.Height</td>
+                                                <td class="text-center"><a asp-controller="Product" asp-action="DiscountList" asp-route-featureId="@item.Id" class="btn btn-dark">İndirim Tanımla</a></td>
+                                            </tr>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.Color</td>
+                                                <td>@item.Size</td>
+                                                <td>@item.Width</td>
+                                                <td>@item.Height</td>
+                                            </tr>
+                                        }
+                                    }
+
                                 </tbody>
                             </table>
                         </div>
@@ -58,7 +92,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <input type="hidden" name="ProductId" value="@Model.FirstOrDefault().ProductId"/>
+                        <input type="hidden" name="ProductId" value="@Model.FirstOrDefault().ProductId" />
                         <div class="col-md-12 mb-2">
                             <input type="text" class="form-control" name="Color" placeholder="Renk" />
                         </div>
@@ -77,7 +111,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-dark">Save changes</button>
+                    <button type="submit" class="btn btn-dark">Kaydet</button>
                 </div>
             </form>
         </div>

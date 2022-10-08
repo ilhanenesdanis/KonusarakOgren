@@ -10,6 +10,7 @@ namespace Core.IService
         void Add(T entity);
         void Update(T entity);
         void Delete(T entity);
+        void DeleteRange(List<T> entities);
         void AddRange(List<T> entities);
         void UpdateRange(List<T> entities);
         bool Any(Expression<Func<T, bool>> expression);

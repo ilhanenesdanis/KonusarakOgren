@@ -16,11 +16,11 @@
     <!-- App css -->
     <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style">
-   
+
     <link href="/assets/css/vendor/responsive.bootstrap5.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-   
-   
+
+
 
     @RenderSection("Links",required:false)
 </head>
@@ -55,32 +55,42 @@
 
                 <!--- Sidemenu -->
                 <ul class="side-nav">
-
-                    <li class="side-nav-item">
-                        <a asp-controller="Brand" asp-action="Index" class="side-nav-link">
-                            <i class="uil-calender"></i>
-                            <span> Markalar </span>
-                        </a>
-                    </li>
-                    <li class="side-nav-item">
-                        <a asp-controller="Category" asp-action="Index" class="side-nav-link">
-                            <i class="uil-calender"></i>
-                            <span> Kategoriler </span>
-                        </a>
-                    </li>
+                    @if (User.IsInRole("SysAdmin") || User.IsInRole("Admin"))
+                    {
+                        <li class="side-nav-item">
+                            <a asp-controller="Brand" asp-action="Index" class="side-nav-link">
+                                <i class="uil-calender"></i>
+                                <span> Markalar </span>
+                            </a>
+                        </li>
+                        <li class="side-nav-item">
+                            <a asp-controller="Category" asp-action="Index" class="side-nav-link">
+                                <i class="uil-calender"></i>
+                                <span> Kategoriler </span>
+                            </a>
+                        </li>
+                        <li class="side-nav-item">
+                            <a asp-controller="Member" asp-action="Index" class="side-nav-link">
+                                <i class="uil-calender"></i>
+                                <span> Kullanıcılar </span>
+                            </a>
+                        </li>
+                    }
                     <li class="side-nav-item">
                         <a asp-controller="Product" asp-action="Index" class="side-nav-link">
                             <i class="uil-calender"></i>
                             <span> Ürünler </span>
                         </a>
                     </li>
-                    <li class="side-nav-item">
-                        <a asp-controller="Member" asp-action="Index" class="side-nav-link">
+                    @if (User.IsInRole("Customer"))
+                    {
+                       <li class="side-nav-item">
+                        <a asp-controller="Product" asp-action="Basket" class="side-nav-link">
                             <i class="uil-calender"></i>
-                            <span> Kullanıcılar </span>
+                            <span> Sepetim </span>
                         </a>
-                    </li>
-
+                    </li> 
+                    }
                 </ul>
                 <div class="clearfix"></div>
 
@@ -131,27 +141,26 @@
     <div class="rightbar-overlay"></div>
     <!-- /End-bar -->
     <!-- bundle -->
-     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-     
-      <script src="/assets/js/vendor.min.js"></script>
-      
-      <script src="/assets/js/app.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="/assets/js/vendor.min.js"></script>
+
+    <script src="/assets/js/app.min.js"></script>
     <script src="/lib/jquery/dist/jquery.min.js"></script>
-    
-    
-    
-    
+
+
+
+
     <script src="/assets/js/vendor/responsive.bootstrap5.min.js"></script>
 
-   
+
     <!-- quill Init js-->
-   
+
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.js"></script>
-    
+
     <!-- end demo js-->
-    
     @RenderSection("Scripts",required:false)
 </body>
 </html>

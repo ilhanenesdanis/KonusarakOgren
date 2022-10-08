@@ -43,6 +43,11 @@ namespace Data.Repository
             _dbSet.Remove(entity);
         }
 
+        public void DeleteRange(List<T> entities)
+        {
+            _dbSet.RemoveRange(entities);
+        }
+
         public IQueryable<T> GetAll()
         {
             return _dbSet.AsNoTracking().AsQueryable();

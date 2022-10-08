@@ -39,6 +39,7 @@ namespace Service.Dependencies
             services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
             services.AddScoped<IProductFeaturesRepository, ProductFeaturesRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IBasketRepository, BasketRepository>();
             //Service Katmanı
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<ICategoryService, CategoryService>();
@@ -49,6 +50,7 @@ namespace Service.Dependencies
             services.AddScoped<IProductCategoryService, ProductCategoryService>();
             services.AddScoped<IProductFeaturesService, ProductFeaturesService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IBasketService, BasketService>();
             
         }
     }

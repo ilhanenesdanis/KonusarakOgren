@@ -1,10 +1,12 @@
 ﻿using DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebUI.APIHandler;
 using WebUI.Models;
 
 namespace WebUI.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -42,7 +44,8 @@ namespace WebUI.Controllers
         [HttpPost]    
         public JsonResult AddProduct(AddProductDto addProduct)
         {
-            addProduct.CompanyId = 1;
+            var companyId = HttpContext.Request.Cookies["MemberId"];
+            addProduct.CompanyId = Convert.ToInt32(companyId);
             string url = _configuration["BaseURL"] + UrlStrings.AddProduct;
             var post = _apiHandler.PostApiString(addProduct, url);
             return Json(new { success = true });
@@ -57,6 +60,41 @@ namespace WebUI.Controllers
         {
             string url = _configuration["BaseURL"] + UrlStrings.AddProductFeature;
             var post = _apiHandler.PostApiString(addProductFeature, url);
+            return Json(new { success = true });
+        }
+        public IActionResult DiscountList(int featureId)
+        {
+            string url = _configuration["BaseURL"] + UrlStrings.GetFeatureDiscount + featureId;
+            var get = _apiHandler.GetApi<CustomResponseDto<List<DiscountDto>>>(url);
+            ViewBag.featureId= featureId;
+            return View(get.Data);
+        }
+        public JsonResult AddDiscount(AddDiscountDto addDiscount)
+        {
+            string url = _configuration["BaseURL"] + UrlStrings.AddDiscoutnt;
+            var post = _apiHandler.PostApiString(addDiscount, url);
+            return Json(new { success = true });
+        }
+        public JsonResult AddToBasket(int ProductId)
+        {
+            var companyId = Convert.ToInt32(HttpContext.Request.Cookies["MemberId"]);
+            AddBasketDto addBasketDto = new AddBasketDto() { ProductId = ProductId, MemberId = companyId };
+            string url = _configuration["BaseURL"] + UrlStrings.AddBasket;
+            var post = _apiHandler.PostApiString(addBasketDto, url);
+            return Json(new { success = true });
+        }
+        public IActionResult Basket()
+        {
+            var companyId = Convert.ToInt32(HttpContext.Request.Cookies["MemberId"]);
+            string url = _configuration["BaseURL"] + UrlStrings.GetMemberBasket + companyId;
+            var getList = _apiHandler.GetApi<CustomResponseDto<List<BasketDto>>>(url);
+            return View(getList.Data);
+        }
+        public JsonResult PurchaseAll()
+        {
+            var companyId = Convert.ToInt32(HttpContext.Request.Cookies["MemberId"]);
+            string url = _configuration["BaseURL"] + UrlStrings.PurcheseAll + companyId;
+            var get = _apiHandler.GetApi<CustomResponseDto<BasketDto>>(url);
             return Json(new { success = true });
         }
     }

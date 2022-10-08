@@ -12,5 +12,6 @@
         public List<Comment> Comments { get; set; }
         public List<ProductCategory> ProductCategories { get; set; }
         public List<ProductFeatures> ProductFeatures { get; set; }
+        public List<Basket> Baskets { get; set; }
     }
 }

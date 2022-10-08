@@ -90,7 +90,7 @@ namespace Service.Service
 
         public List<ProductFeaturesDto> GetProductFeatures(int productId)
         {
-            var list = _productFeature.GetBy(x => x.ProductId == productId).Include(x=>x.Product).ToList();
+            var list = _productFeature.GetBy(x => x.ProductId == productId).Include(x => x.Product).ToList();
             var mapping = _mapper.Map<List<ProductFeaturesDto>>(list);
             return mapping;
         }

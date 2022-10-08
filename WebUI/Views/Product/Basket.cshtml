@@ -1,0 +1,55 @@
+﻿@model List<BasketDto>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    decimal price = 0;
+}
+<div class="row mt-2 mb-3">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Ürün Adı</th>
+                                        <th>Eklenme Tarihi</th>
+                                        <th>Ürün Fiyatı</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        price += item.Product.SalePrice;
+                                        <tr>
+                                            <th>@item.Product.Name</th>
+                                            <th>@item.CreateDate</th>
+                                            <th>@item.Product.SalePrice</th>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-3 text-end">
+                        <button class="btn btn-danger" onclick="PurchaseAll()">Satın Al:  @price</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        function PurchaseAll() {
+            $.ajax({
+                url:'/Product/PurchaseAll',
+                success: function() {
+                    window.location.reload();
+                }
+            })
+        }
+    </script>
+}

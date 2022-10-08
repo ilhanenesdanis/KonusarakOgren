@@ -18,6 +18,7 @@ namespace Data
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<ProductFeatures> ProductFeatures { get; set; }
+        public DbSet<Basket> Baskets { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

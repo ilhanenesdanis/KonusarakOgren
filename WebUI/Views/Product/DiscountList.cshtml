@@ -1,4 +1,4 @@
-﻿@model List<BrandDto>
+﻿@model List<DiscountDto>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -8,7 +8,10 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-m-12 mb-2">
-                        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#dark-header-modal">Yeni Marka Ekle</button>
+                        @if (Model.Count < 1)
+                        {
+                            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#dark-header-modal">Yeni İndirim Ekle</button>
+                        }
                     </div>
                     <div class="col-md-12">
                         <div class="table-responsive">
@@ -16,19 +19,19 @@
                                 <thead>
                                     <tr>
                                         <th>Düzenle</th>
-                                        <th>Marka Adı</th>
+                                        <th>İndirim Adı</th>
+                                        <th>İndirim Oranı</th>
                                         <th>Eklenme Tarihi</th>
-                                        <th>Pasif Yap</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.OrderByDescending(x => x.CreateDate))
+                                    @foreach (var item in Model)
                                     {
                                         <tr>
                                             <td><button class="btn btn-danger">Güncelle</button></td>
                                             <td>@item.Name</td>
+                                            <td>@item.DiscountRate</td>
                                             <td>@item.CreateDate</td>
-                                            <td><button class="btn btn-info">Pasif Yap</button></td>
                                         </tr>
                                     }
                                 </tbody>
@@ -44,15 +47,26 @@
 <div id="dark-header-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dark-header-modalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form asp-action="AddBrand" asp-controller="Brand"
+            <form asp-action="AddDiscount" asp-controller="Product"
                   data-ajax="true" data-ajax-method="POST"
                   data-ajax-success="OnSuccess">
                 <div class="modal-header modal-colored-header bg-dark">
-                    <h4 class="modal-title" id="dark-header-modalLabel">Yeni Marka Ekle</h4>
+                    <h4 class="modal-title" id="dark-header-modalLabel">Yeni İndirim Ekle</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" placeholder="Marka Adı" class="form-control" name="Name" />
+                    <div class="row">
+                        <div class="col-md-12 mb-2">
+                            <input type="text" placeholder="İndirim Adı" name="Name" class="form-control" />
+                        </div>
+                        <input type="hidden" placeholder="" name="ProductFeatureId" class="form-control" value="@ViewBag.featureId" />
+                        <div class="col-md-12 mb-2">
+                            <input type="number" placeholder="İndirim Oranı" name="DiscountRate" class="form-control" />
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <textarea name="Description" class="form-control" placeholder="İndirim Açıklaması"></textarea>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-dark">Kaydet</button>
@@ -64,6 +78,6 @@
 <script>
     function OnSuccess() {
         $('#dark-header-modal').modal('hide');
-         Swal.fire('İşlem Başarılı!', '', 'success')
+        Swal.fire('İşlem Başarılı!', '', 'success')
     }
 </script>

@@ -1,9 +1,11 @@
 ﻿using DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebUI.APIHandler;
 
 namespace WebUI.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly IConfiguration _configuration;

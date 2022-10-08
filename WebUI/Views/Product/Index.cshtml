@@ -8,37 +8,78 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-m-12 mb-2">
-                        <a  class="btn btn-dark" asp-controller="Product" asp-action="AddProductPage">Yeni Ürün Ekle</a>
+                        @if (User.IsInRole("SysAdmin") || User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-dark" asp-controller="Product" asp-action="AddProductPage">Yeni Ürün Ekle</a>
+                        }
                     </div>
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover">
                                 <thead>
-                                    <tr>
-                                        <th>Düzenle</th>
-                                        <th>Ürün Özellikleri</th>
-                                        <th>Ürün Adı</th>
-                                        <th>Barcode No</th>
-                                        <th>Marka</th>
-                                        <th>Kategori Adı</th>
-                                        <th>Satış Fiyatı</th>
-                                        <th>Stok</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.ProductDtos)
+                                    @if (User.IsInRole("SysAdmin") || User.IsInRole("Admin"))
                                     {
                                         <tr>
-                                            <td><button class="btn btn-danger">Güncelle</button></td>
-                                            <td><a asp-controller="Product" asp-action="ProductFeatures" asp-route-productId="@item.Id" class="btn btn-danger">Ürün Özellikleri</a></td>
-                                            <td>@item.Name</td>
-                                            <td>@item.BarcodeNo</td>
-                                            <td>@item.Brand.Name</td>
-                                            <td>@item.ProductCategories.FirstOrDefault().Category.Name</td>
-                                            <td>@item.SalePrice</td>
-                                            <td>@item.Stock</td>
+                                            <th>Düzenle</th>
+                                            <th>Ürün Özellikleri</th>
+                                            <th>Ürün Adı</th>
+                                            <th>Barcode No</th>
+                                            <th>Marka</th>
+                                            <th>Kategori Adı</th>
+                                            <th>Satış Fiyatı</th>
+                                            <th>Stok</th>
                                         </tr>
                                     }
+                                    else
+                                    {
+                                        <tr>
+                                            <th>Ürün Özellikleri</th>
+                                            <th>Ürün Adı</th>
+                                            <th>Barcode No</th>
+                                            <th>Marka</th>
+                                            <th>Kategori Adı</th>
+                                            <th>Satış Fiyatı</th>
+                                            <th>Stok</th>
+                                            <th>Sepete Ekle</th>
+                                        </tr>
+                                    }
+
+                                </thead>
+                                <tbody>
+                                    @if (User.IsInRole("SysAdmin") || User.IsInRole("Admin"))
+                                    {
+                                        @foreach (var item in Model.ProductDtos)
+                                        {
+                                            <tr>
+                                                <td><button class="btn btn-danger">Güncelle</button></td>
+                                                <td><a asp-controller="Product" asp-action="ProductFeatures" asp-route-productId="@item.Id" class="btn btn-danger">Ürün Özellikleri</a></td>
+                                                <td>@item.Name</td>
+                                                <td>@item.BarcodeNo</td>
+                                                <td>@item.Brand.Name</td>
+                                                <td>@item.ProductCategories.FirstOrDefault().Category.Name</td>
+                                                <td>@item.SalePrice</td>
+                                                <td>@item.Stock</td>
+
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        @foreach (var item in Model.ProductDtos)
+                                        {
+                                            <tr>
+                                                <td><a asp-controller="Product" asp-action="ProductFeatures" asp-route-productId="@item.Id" class="btn btn-danger">Ürün Özellikleri</a></td>
+                                                <td>@item.Name</td>
+                                                <td>@item.BarcodeNo</td>
+                                                <td>@item.Brand.Name</td>
+                                                <td>@item.ProductCategories.FirstOrDefault().Category.Name</td>
+                                                <td>@item.SalePrice</td>
+                                                <td>@item.Stock</td>
+                                                <td><button class="btn btn-success" onclick="AddToBasket(@item.Id)">Sepete Ekle</button></td>
+                                            </tr>
+                                        }
+                                    }
+
                                 </tbody>
                             </table>
                         </div>
@@ -49,3 +90,16 @@
         </div>
     </div>
 </div>
+@section Scripts{
+    <script>
+        function AddToBasket(ProductId) {
+            $.ajax({
+                url: '/Product/AddToBasket',
+                data: { ProductId: ProductId },
+                success: function() {
+                    Swal.fire('Ürün Sepete Eklendi', '', 'success')
+                }
+            })
+        }
+    </script>
+}

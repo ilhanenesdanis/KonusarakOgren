@@ -43,6 +43,12 @@ namespace Service.Service
             _unitOfWork.saveChanges();
         }
 
+        public void DeleteRange(List<T> entities)
+        {
+            _repository.DeleteRange(entities);
+            _unitOfWork.saveChanges();
+        }
+
         public List<T> GetAll()
         {
             return _repository.GetAll().ToList();

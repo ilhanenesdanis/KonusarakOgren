@@ -20,6 +20,9 @@ namespace Service.Mapping
             CreateMap<Brand, AddBrandDto>().ReverseMap();
             CreateMap<Category, AddCategoryDto>().ReverseMap();
             CreateMap<ProductFeatures, AddProductFeatureDto>().ReverseMap();
+            CreateMap<Discount, AddDiscountDto>().ReverseMap();
+            CreateMap<Basket, BasketDto>().ReverseMap();
+            CreateMap<Basket, AddBasketDto>().ReverseMap();
         }
     }
 }

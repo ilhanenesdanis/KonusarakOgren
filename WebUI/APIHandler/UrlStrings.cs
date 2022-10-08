@@ -20,6 +20,13 @@
         public static string GetAllCompanyProducts = "Product/GetAllCompanyProducts/";
         public static string GetProductFeatures = "Product/GetProductFeatures/";
         public static string AddProductFeature = "Product/AddProductFeature";
+        //Api DiscountController Endpoints
+        public static string AddDiscoutnt = "Discount/AddDiscoutnt";
+        public static string GetFeatureDiscount = "Discount/GetFeatureDiscount/";
+        //Basket
+        public static string GetMemberBasket = "Basket/GetMemberBasket/";
+        public static string AddBasket = "Basket/AddBasket";
+        public static string PurcheseAll = "Basket/PurcheseAll/";
 
     }
 }
