@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-xxl-4 col-lg-5">
+            <div class="card">
+                <div class="card-body p-4">
+                    <div class="text-center w-75 m-auto">
+                        <h4 class="text-dark-50 text-center pb-0 fw-bold">Giriş Yap</h4>
+                    </div>
+
+                    <form asp-controller="Login" asp-action="Login">
+                        <div class="mb-3">
+                            <label for="emailaddress" class="form-label">E-Mail Adresiniz</label>
+                            <input class="form-control" type="email" id="emailaddress" required name="Email" placeholder="E-Mail Adresinizi Giriniz">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Parola</label>
+                            <div class="input-group input-group-merge">
+                                <input type="password" id="password" class="form-control" name="Password" placeholder="Parola Giriniz">
+                                <div class="input-group-text" data-password="false">
+                                    <span class="password-eye"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 mb-0 text-center">
+                            <button class="btn btn-primary" type="submit"> Giriş Yap </button>
+                        </div>
+
+                    </form>
+                </div> 
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <p class="text-muted">Hesabınız Yok Mu?<a asp-controller="Login" asp-action="Register" class="text-muted ms-1"><b>Kayıt Ol</b></a></p>
+                </div> 
+            </div>
+
+        </div> 
+    </div>
+</div>

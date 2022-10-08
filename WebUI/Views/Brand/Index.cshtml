@@ -1,0 +1,35 @@
+﻿@model List<BrandDto>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row mt-2 mb-3">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Düzenle</th>
+                                <th>Marka Adı</th>
+                                <th>Eklenme Tarihi</th>
+                                <th>Pasif Yap</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OrderByDescending(x=>x.CreateDate))
+                            {
+                                <tr>
+                                    <td><button class="btn btn-danger">Güncelle</button></td>
+                                    <td>@item.Name</td>
+                                    <td>@item.CreateDate</td>
+                                    <td><button class="btn btn-info">Pasif Yap</button></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

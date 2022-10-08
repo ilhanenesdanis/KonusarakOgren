@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-xxl-4 col-lg-5">
+            <div class="card">
+                <div class="card-header pt-4 pb-4 text-center bg-primary">
+                </div>
+                <div class="card-body p-4">
+                    <div class="text-center w-75 m-auto">
+                        <h4 class="text-dark-50 text-center mt-0 fw-bold">Kayıt Ol</h4>
+                    </div>
+                    <form asp-controller="Login" asp-action="Register">
+                        <div class="mb-3">
+                            <label for="fullname" class="form-label">İsminiz</label>
+                            <input class="form-control" type="text" id="Name" placeholder="İsminiz" name="Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="emailaddress" class="form-label">Soyisminiz</label>
+                            <input class="form-control" type="text" id="Surname" required placeholder="Soyisminiz" name="Surname">
+                        </div>
+                       <input type="hidden" value="3" name="RoleId" />
+                        <div class="mb-3">
+                            <label for="emailaddress" class="form-label">E-Mail Adresiniz</label>
+                            <input class="form-control" type="email" id="Email" required placeholder="E-Mail Adresiniz" name="Email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Parola</label>
+                            <div class="input-group input-group-merge">
+                                <input type="password" id="password" class="form-control" name="Password" placeholder="Parolanızı Giriniz">
+                                <div class="input-group-text" data-password="false">
+                                    <span class="password-eye"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 text-center">
+                            <button class="btn btn-primary" type="submit">Kayıt Ol</button>
+                        </div>
+                    </form>
+                </div> 
+            </div>
+
+        </div> 
+    </div>
+</div>
