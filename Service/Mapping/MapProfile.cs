@@ -19,6 +19,7 @@ namespace Service.Mapping
             CreateMap<Role, RoleDto>().ReverseMap();
             CreateMap<Brand, AddBrandDto>().ReverseMap();
             CreateMap<Category, AddCategoryDto>().ReverseMap();
+            CreateMap<ProductFeatures, AddProductFeatureDto>().ReverseMap();
         }
     }
 }

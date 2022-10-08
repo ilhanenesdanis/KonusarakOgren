@@ -36,5 +36,12 @@ namespace WebAPI.Controllers
             }
             return CreateActionResult(CustomResponseDto<MemberDto>.Success(200,result));
         }
+        [HttpGet]
+        public IActionResult GetByCompany()
+        {
+            var result = _memberService.GetBy(x => x.RoleId == 2).ToList();
+            var mapping = _mapper.Map<List<MemberDto>>(result);
+            return CreateActionResult(CustomResponseDto<List<MemberDto>>.Success(200, mapping));
+        }
     }
 }

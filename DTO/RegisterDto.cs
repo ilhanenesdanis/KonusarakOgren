@@ -7,6 +7,6 @@
         public string CompanyName { get; set; }=String.Empty;
         public string Email { get; set; }
         public int RoleId { get; set; }
-        public string Password { get; set; }
+        public string Password { get; set; } = String.Empty;
     }
 }

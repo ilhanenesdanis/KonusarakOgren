@@ -17,8 +17,14 @@ namespace WebUI.Controllers
         public IActionResult Index()
         {
             string url = _configuration["BaseURL"] + UrlStrings.GetAllBrand;
-            var result=_apiHandler.GetApi<CustomResponseDto<List<BrandDto>>>(url);
+            var result = _apiHandler.GetApi<CustomResponseDto<List<BrandDto>>>(url);
             return View(result.Data);
+        }
+        public JsonResult AddBrand(AddBrandDto addBrand)
+        {
+            string url = _configuration["BaseURL"] + UrlStrings.AddNewBrand;
+            var post = _apiHandler.PostApiString(addBrand, url);
+            return Json(new { success = true });
         }
     }
 }

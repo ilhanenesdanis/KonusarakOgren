@@ -39,6 +39,12 @@ namespace Service.Service
         public int Register(RegisterDto registerDto)
         {
             byte[] passwordHash, passwordSalt;
+            if (registerDto.RoleId == 2)
+            {
+                Random random = new Random();
+                string password=random.Next(0, 1000000).ToString();
+                registerDto.Password = password;
+            }
             HashHelper.CreatePasswordHash(registerDto.Password, out passwordHash, out passwordSalt);
             Member member = new Member()
             {

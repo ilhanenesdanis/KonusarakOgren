@@ -1,0 +1,75 @@
+﻿@model ProductVM
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row mt-2 mb-3">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-action="AddProduct" asp-controller="Product"
+                              data-ajax="true" data-ajax-method="POST"
+                              data-ajax-success="OnSuccess">
+
+                            <div class="row">
+                                <div class="col-md-12 mb-2">
+                                    <select class="select2 form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Kategori Seçiniz ..." required name="CategoryId[]">
+                                        @foreach (var item in Model.CategoryDtos.Where(x => x.TopCategoryId == 0))
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                            @foreach (var SubCategory in Model.CategoryDtos.Where(x => x.TopCategoryId == item.Id))
+                                            {
+                                                <option value="@SubCategory.Id">=> @SubCategory.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <select class="select2 form-control" data-toggle="select2" data-placeholder="Marka Seçiniz ..." name="BrandId"  required>
+                                        @foreach (var item in Model.BrandDtos)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <input type="text" required class="form-control" name="Name" placeholder="Ürün Adı" />
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <input type="number" required class="form-control" name="SalePrice" placeholder="Satış Fiyatı" />
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <input type="number" required class="form-control" name="Stock" placeholder="Stok" />
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <input type="text" class="form-control" name="Color" placeholder="Renk" />
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <input type="text" class="form-control" name="Size" placeholder="Size" />
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <input type="number" class="form-control" name="Height" placeholder="Yükseklik" />
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <input type="number" class="form-control" name="Width" placeholder="Genişlik" />
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <textarea class="form-control" placeholder="Ürün Açıklaması" name="ProductDescription"></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-dark">Kaydet</button>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function OnSuccess() {
+        window.location.href = "/Product/Index";
+    }
+</script>

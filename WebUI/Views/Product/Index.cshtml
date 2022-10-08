@@ -1,0 +1,51 @@
+﻿@model ProductVM
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row mt-2 mb-3">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-m-12 mb-2">
+                        <a  class="btn btn-dark" asp-controller="Product" asp-action="AddProductPage">Yeni Ürün Ekle</a>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Düzenle</th>
+                                        <th>Ürün Özellikleri</th>
+                                        <th>Ürün Adı</th>
+                                        <th>Barcode No</th>
+                                        <th>Marka</th>
+                                        <th>Kategori Adı</th>
+                                        <th>Satış Fiyatı</th>
+                                        <th>Stok</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ProductDtos)
+                                    {
+                                        <tr>
+                                            <td><button class="btn btn-danger">Güncelle</button></td>
+                                            <td><a asp-controller="Product" asp-action="ProductFeatures" asp-route-productId="@item.Id" class="btn btn-danger">Ürün Özellikleri</a></td>
+                                            <td>@item.Name</td>
+                                            <td>@item.BarcodeNo</td>
+                                            <td>@item.Brand.Name</td>
+                                            <td>@item.ProductCategories.FirstOrDefault().Category.Name</td>
+                                            <td>@item.SalePrice</td>
+                                            <td>@item.Stock</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

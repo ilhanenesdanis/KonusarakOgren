@@ -1,4 +1,4 @@
-﻿@model List<BrandDto>
+﻿@model List<CategoryDto>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -16,13 +16,13 @@
                                 <thead>
                                     <tr>
                                         <th>Düzenle</th>
-                                        <th>Marka Adı</th>
+                                        <th>Kategori Adı</th>
                                         <th>Eklenme Tarihi</th>
                                         <th>Pasif Yap</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.OrderByDescending(x => x.CreateDate))
+                                    @foreach (var item in Model.Where(x => x.TopCategoryId == 0).OrderByDescending(x => x.CreateDate))
                                     {
                                         <tr>
                                             <td><button class="btn btn-danger">Güncelle</button></td>
@@ -30,6 +30,15 @@
                                             <td>@item.CreateDate</td>
                                             <td><button class="btn btn-info">Pasif Yap</button></td>
                                         </tr>
+                                        foreach (var subCategory in Model.Where(x => x.TopCategoryId == item.Id))
+                                        {
+                                            <tr>
+                                                <td><button class="btn btn-danger">Güncelle</button></td>
+                                                <td>@item.Name - @subCategory.Name</td>
+                                                <td>@subCategory.CreateDate</td>
+                                                <td><button class="btn btn-info">Pasif Yap</button></td>
+                                            </tr>
+                                        }
                                     }
                                 </tbody>
                             </table>
@@ -44,7 +53,7 @@
 <div id="dark-header-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dark-header-modalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form asp-action="AddBrand" asp-controller="Brand"
+            <form asp-action="AddCategory" asp-controller="Category"
                   data-ajax="true" data-ajax-method="POST"
                   data-ajax-success="OnSuccess">
                 <div class="modal-header modal-colored-header bg-dark">
@@ -52,7 +61,25 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" placeholder="Marka Adı" class="form-control" name="Name" />
+                    <div class="row">
+                        <div class="col-md-12 mb-2">
+                            <select class="form-select" name="TopCategoryId">
+                                <option value="0">Seçiniz</option>
+                                @foreach (var item in Model.Where(x=>x.TopCategoryId==0))
+                                {
+                                     <option value="@item.Id">@item.Name</option>
+                                     @foreach (var subCategory in Model.Where(x=>x.TopCategoryId==item.Id))
+                                     {
+                                          <option value="@subCategory.Id">=> @subCategory.Name</option>
+                                     }
+                                }
+                            </select>
+                        </div>
+                         <div class="col-md-12 mb-2">
+                              <input type="text" placeholder="Kategori Adı" class="form-control" name="Name" />
+                        </div>
+                    </div>
+                   
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-dark">Save changes</button>
@@ -62,7 +89,7 @@
     </div>
 </div>
 <script>
-    function OnSuccess() {
+     function OnSuccess() {
         $('#dark-header-modal').modal('hide');
          Swal.fire('İşlem Başarılı!', '', 'success')
     }
